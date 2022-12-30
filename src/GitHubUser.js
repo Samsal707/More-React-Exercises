@@ -1,25 +1,42 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import Fetch from "./Fetch";
+import LoadingSpinner from "./LoadingSpinner";
 
 export default function GitHubUser({ login }) {
-  const [data, setData] = useState();
-  const [error, setError] = useState();
-  const [loading, setLoading] = useState(false);
+  return (
+    <Fetch
+  uri={`https://api.github.com/users/${login}`}
+  loadingFallback={<LoadingSpinner />}
+  renderError={error => {
+    // handle error
+    return <p>Something went wrong... {error.message}</p>;
+  }}
+  renderSuccess={({ data }) => (
+    <>
+      <h1>Todo: Render UI for data</h1>
+      <pre>{JSON.stringify(data, null, 2)}</pre>
+    </>
+  )}
+/>
 
-  useEffect(() => {
-    if (!login) return;
-    setLoading(true);
-    fetch(`https://api.github.com/users/${login}`)
-      .then(data => data.json())
-      .then(setData)
-      .then(() => setLoading(false))
-      .catch(setError);
-  }, [login]);
+  // <Fetch
+  // uri={`https://api.github.com/users/${login}`}
+  // loadingFallback={<LoadingSpinner />}
+  // renderError={error => {
+  //   // handle error
+  //   return <p>Something went wrong... {error.message}</p>;
+  // }}
+  // renderSuccess={({ data }) => (
+  //   <>
+  //     <h1>Todo: Render UI for data</h1>
+  //     <pre>{JSON.stringify(data, null, 2)}</pre>
+  //   </>
+//   )}
+// />
+  );
+}
 
-  if (loading) return <h1>loading...</h1>;
-  if (error)
-    return <pre>{JSON.stringify(error, null, 2)}</pre>;
-  if (!data) return null;
-
+function UserDetails({ data }) {
   return (
     <div className="githubUser">
       <img
