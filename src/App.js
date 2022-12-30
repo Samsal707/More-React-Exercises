@@ -39,17 +39,10 @@
 // }
 
 
-import React, { useState } from "react";
+import React from "react";
 import GitHubUser from "./GitHubUser";
 // import SearchForm from "./SearchForm";
 
 export default function App() {
-  const [login, setLogin] = useState("moontahoe");
-
-  return (
-    <>
-      {/* <SearchForm value={login} onSearch={setLogin} /> */}
-      <GitHubUser login={login} />
-    </>
-  );
+  return <GitHubUser login="eveporcello" />;
 }
