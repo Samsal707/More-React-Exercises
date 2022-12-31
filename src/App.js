@@ -1,48 +1,34 @@
-// import React, { useState } from "react";
-// // import GitHubUser from "./GitHubUser";
-// import { FixedSizeList } from "react-window";
-// // import List from "./List"
-// import faker from "faker"
-// // import SearchForm from "./SearchForm";
-
-// const bigList = [...Array(50)].map(() => ({
-//   name: faker.name.findName(),
-//   email: faker.internet.email(),
-//   avatar: faker.internet.avatar()
-// }));
-
-
-// export default function App() {
-//   const renderRow = ({ index, style }) => (
-//     <div style={{ ...style, ...{ display: "flex" } }}>
-//       <img
-//         src={bigList[index].avatar}
-//         alt={bigList[index].name}
-//         width={50}
-//       />
-//       <p>
-//         {bigList[index].name} - {bigList[index].email}
-//       </p>
-//     </div>
-//   );
-
-//   return (
-//     <FixedSizeList
-//       height={window.innerHeight}
-//       width={window.innerWidth - 20}
-//       itemCount={bigList.length}
-//       itemSize={50}
-//     >
-//       {renderRow}
-//     </FixedSizeList>
-//   );
-// }
-
-
-import React from "react";
+import React, { useState } from "react";
+import SearchForm from "./SearchForm";
 import GitHubUser from "./GitHubUser";
-// import SearchForm from "./SearchForm";
+import UserRepositories from "./UserRepositories";
+import RepositoryReadme from "./RepositoryReadme";
 
 export default function App() {
-  return <GitHubUser login="eveporcello" />;
+  const [login, setLogin] = useState("moonhighway");
+  const [repo, setRepo] = useState("learning-react");
+
+  const handleSearch = login => {
+    if (login) return setLogin(login);
+    setLogin("");
+    setRepo("");
+  };
+
+  if (!login)
+    return (
+      <SearchForm value={login} onSearch={handleSearch} />
+    );
+
+  return (
+    <>
+      <SearchForm value={login} onSearch={handleSearch} />
+      <GitHubUser login={login} />
+      <UserRepositories
+        login={login}
+        repo={repo}
+        onSelect={setRepo}
+      />
+      <RepositoryReadme login={login} repo={repo} />
+    </>
+  );
 }

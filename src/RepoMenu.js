@@ -1,25 +1,21 @@
 //this is component enables them to iterate through their GitHub repositories
-import React, { useEffect } from "react";
+import React from "react";
 import { useIterator } from "./useIterator";
+import RepositoryReadme from "./RepositoryReadme";
 
-export default function RepoMenu({
-  repositories,
-  onSelect = f => f
-}) {
+export default function RepoMenu({ repositories, selected, onSelect = f => f }) {
   const [{ name }, previous, next] = useIterator(
-    repositories
+    repositories,
+    selected ? repositories.findIndex(repo => repo.name === selected) : null
   );
-
-  useEffect(() => {
-    if (!name) return;
-    onSelect(name);
-  },[name]);
-
   return (
-    <div style={{ display: "flex" }}>
-      <button onClick={previous}>&lt;</button>
-      <p>{name}</p>
-      <button onClick={next}>&gt;</button>
-    </div>
+    <>
+      <div style={{ display: "flex" }}>
+        <button onClick={previous}>&lt;</button>
+        <p>{name}</p>
+        <button onClick={next}>&gt;</button>
+      </div>
+      <RepositoryReadme repo={name} />
+    </>
   );
 }
