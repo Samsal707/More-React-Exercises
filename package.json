@@ -12,6 +12,7 @@
     "react-dom": "^18.2.0",
     "react-markdown": "^8.0.4",
     "react-scripts": "^4.0.3",
+    "react-spinners": "^0.13.7",
     "react-window": "^1.8.8",
     "web-vitals": "^2.1.4"
   },
