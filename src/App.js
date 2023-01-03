@@ -1,34 +1,69 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SearchForm from "./SearchForm";
-import GitHubUser from "./GitHubUser";
-import UserRepositories from "./UserRepositories";
-import RepositoryReadme from "./RepositoryReadme";
+// import GitHubUser from "./GitHubUser";
+// import UserRepositories from "./UserRepositories";
+// import RepositoryReadme from "./RepositoryReadme";
+import { GraphQLClient } from "graphql-request";
+import UserDetails from "./UserDetails"
+import List from "./List"
+
+const query = `
+  query findRepos($login:String!) {
+    user(login:$login) {
+      login
+      name
+      location
+      avatar_url: avatarUrl
+      repositories(first:100) {
+        totalCount
+        nodes {
+          name
+        }
+      }
+    }
+  }
+`;
+
+const client = new GraphQLClient(
+  "https://api.github.com/graphql",
+  {
+    headers: {
+      Authorization: `Bearer <Access_Token>`
+    }
+  }
+);
+
+client
+  .request(query, { login: "samsal707" })
+  .then(results => JSON.stringify(results, null, 2))
+  .then(console.log)
+  .catch(console.error);
+
 
 export default function App() {
-  const [login, setLogin] = useState("moonhighway");
-  const [repo, setRepo] = useState("learning-react");
+  const [login, setLogin] = useState("samsal707");
+  const [userData, setUserData] = useState();
+  useEffect(() => {
+    client
+      .request(query, { login })
+      .then(({ user }) => user)
+      .then(setUserData)
+      .catch(console.error);
+  }, [login]);
 
-  const handleSearch = login => {
-    if (login) return setLogin(login);
-    setLogin("");
-    setRepo("");
-  };
-
-  if (!login)
-    return (
-      <SearchForm value={login} onSearch={handleSearch} />
-    );
+  if (!userData) return <p>loading...</p>;
 
   return (
     <>
-      <SearchForm value={login} onSearch={handleSearch} />
-      <GitHubUser login={login} />
-      <UserRepositories
-        login={login}
-        repo={repo}
-        onSelect={setRepo}
+      <SearchForm value={login} onSearch={setLogin} />
+      <UserDetails {...userData} />
+      <p>{userData.repositories.totalCount} - repos</p>
+      <List
+        data={userData.repositories.nodes}
+        renderItem={repo => <span>{repo.name}</span>}
       />
-      <RepositoryReadme login={login} repo={repo} />
     </>
   );
 }
+
+// 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

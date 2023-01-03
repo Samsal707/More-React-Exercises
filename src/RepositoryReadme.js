@@ -26,12 +26,12 @@ const loadReadme = useCallback(async (login, repo) => {
     setMarkdown(markdown);
     setLoading(false);
   }
-}, []);
+},[mounted]);
 
   useEffect(() => {
     if (!repo || !login) return;
     loadReadme(login, repo).catch(setError);
-  }, [repo]);
+  }, [repo, loadReadme, login]);
 
   if (error)
     return <pre>{JSON.stringify(error, null, 2)}</pre>;

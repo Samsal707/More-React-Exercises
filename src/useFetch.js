@@ -24,11 +24,15 @@ useEffect(() => {
       if (!mounted.current) return;
       setError(error);
     });
-  }[])
-
+  }, [uri, mounted])
+    
   return {
     loading,
     data,
     error
-  };
+
+  }
+    
 }
+   
+  

@@ -1,7 +1,8 @@
-//this is component enables them to iterate through their GitHub repositories
+//this is component enables iteration through their GitHub repositories
 import React from "react";
 import { useIterator } from "./useIterator";
-import RepositoryReadme from "./RepositoryReadme";
+// import RepositoryReadme from "./RepositoryReadme";
+
 
 export default function RepoMenu({ repositories, selected, onSelect = f => f }) {
   const [{ name }, previous, next] = useIterator(
@@ -15,7 +16,7 @@ export default function RepoMenu({ repositories, selected, onSelect = f => f }) 
         <p>{name}</p>
         <button onClick={next}>&gt;</button>
       </div>
-      <RepositoryReadme repo={name} />
+      {/* <RepositoryReadme  repo={name} /> */}
     </>
   );
 }

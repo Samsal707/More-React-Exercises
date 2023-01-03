@@ -1,19 +1,20 @@
 import React from 'react';
-import { useIterator } from './useIterator';
-import RepositoryReadme from './RepositoryReadme';
+import UserRepositories from './UserRepositories';
 
-export default function RepoMenu({ repositories, login }) {
-  const [{ name }, previous, next] = useIterator(
-    repositories
-  );
+export default function UserDetails({ data }) {
   return (
-    <>
-      <div style={{ display: "flex" }}>
-        <button onClick={previous}>&lt;</button>
-        <p>{name}</p>
-        <button onClick={next}>&gt;</button>
+    <div className="githubUser">
+      <img src={data.avatar_url} alt={data.login} style={{ width: 200 }} />
+      <div>
+        <h1>{data.login}</h1>
+        {data.name && <p>{data.name}</p>}
+        {data.location && <p>{data.location}</p>}
       </div>
-      <RepositoryReadme login={login} repo={name} />
-    </>
+      <UserRepositories
+        login={data.login}
+        onSelect={repoName => console.log(`${repoName} selected`)}
+      />
+    </div>
   );
+
 }
