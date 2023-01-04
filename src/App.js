@@ -1,57 +1,35 @@
-import  React from "react";
-import ErrorBoundary from "./ErrorBoundary";
-// import Status from "./Status";
-import { Suspense } from "react";
-import { GridLoader } from "react-spinners/ClipLoader";
-import Gnar from "./Gnar"
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import {
+  Home,
+  About,
+  Events,
+  Products,
+  Contact
+} from "./pages";
 
-
-
-export default function App() {
-  
+function App() {
   return (
-    <Suspense fallback={<GridLoader />}>
-      <ErrorBoundary>
-        <Gnar />
-      </ErrorBoundary>
-    </Suspense>
+    <div>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route
+          path="/about"
+          element={<About />}
+        />
+        <Route
+          path="/events"
+          element={<Events />}
+        />
+        <Route
+          path="/products"
+          element={<Products />}
+        />
+        <Route
+          path="/contact"
+          element={<Contact />}
+        />
+      </Routes>
+    </div>
   );
 }
-
-
-// export default function App() {
-//   return (
-//   <>
-//     <Suspense fallback={<GridLoader />}>
-//       <ErrorBoundary>
-//         <Status />
-//       </ErrorBoundary>
-//     </Suspense>
-//   </>
-//   );
-// }
-
-
-
-// import React, { useState, Suspense, lazy } from "react";
-// import Agreement from "./Agreement";
-// import ClimbingBoxLoader from "react-spinners/ClimbingBoxLoader";
-// import ErrorBoundary from "./ErrorBoundary";
-// import ErrorScreen from "./ErrorScreen";
-
-// const Main = lazy(() => import("./Main"));
-
-// export default function App() {
-//   const [agree, setAgree] = useState(false);
-
-//   if (!agree)
-//     return <Agreement onAgree={() => setAgree(true)} />;
-
-//   return (
-//     <ErrorBoundary fallback={ErrorScreen}>
-//       <Suspense fallback={<ClimbingBoxLoader />}>
-//         <Main />
-//       </Suspense>
-//     </ErrorBoundary>
-//   );
-// }
