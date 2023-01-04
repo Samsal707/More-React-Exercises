@@ -1,5 +1,9 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
+import React, { Redirect } from "react";
+import {
+  Routes,
+  Route
+} from "react-router-dom";
+
 import {
   Home,
   About,
@@ -45,6 +49,7 @@ export default function App() {
           element={<Contact />}
         />
         <Route path="*" element={<Whoops404 />} />
+       <Redirect from="services" to="about/services" />
       </Routes>
     </div>
   );
