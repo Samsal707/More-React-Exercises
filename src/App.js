@@ -5,30 +5,46 @@ import {
   About,
   Events,
   Products,
-  Contact
+  Contact,
+  Whoops404,
+  Services,
+  History,
+  Location
 } from "./pages";
 
-function App() {
+export default function App() {
   return (
     <div>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="about" element={<About />}>
+          <Route
+            path="services"
+            element={<Services />}
+          />
+
+          <Route
+            path="history"
+            element={<History />}
+          />
+          <Route
+            path="location"
+            element={<Location />}
+          />
+        </Route>
         <Route
-          path="/about"
-          element={<About />}
-        />
-        <Route
-          path="/events"
+          path="events"
           element={<Events />}
         />
         <Route
-          path="/products"
+          path="products"
           element={<Products />}
         />
         <Route
-          path="/contact"
+          path="contact"
           element={<Contact />}
         />
+        <Route path="*" element={<Whoops404 />} />
       </Routes>
     </div>
   );
